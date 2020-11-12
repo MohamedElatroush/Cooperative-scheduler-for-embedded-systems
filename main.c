@@ -1,5 +1,4 @@
-#include "stm32f4xx.h"
-#include "system_stm32f4xx.h"
+
 #include "schedueler.c"
 
 void TaskA(void);
@@ -7,6 +6,7 @@ void TaskB(void);
 
 void TaskA(){
 	//
+	printf("TASK A\n");
 	
 }
 
@@ -18,8 +18,9 @@ void TaskB(){
 int main()
 {
 	init();
-	
-	
+	QueTask(&TaskA,2);
+	Dispatch();
+
 	while(1)
 	{
 		
