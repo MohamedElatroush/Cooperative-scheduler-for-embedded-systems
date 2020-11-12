@@ -11,7 +11,11 @@ void TaskA(){
 }
 
 void TaskB(){
-	//
+	printf("TASK B\n");
+}
+
+void TaskC(){
+	printf("TASK C\n");
 }
 
 
@@ -19,10 +23,13 @@ int main()
 {
 	init();
 	QueTask(&TaskA,2);
+	QueTask(&TaskC,3);
+	QueTask(&TaskB,1);
+	
 	Dispatch();
-
-	while(1)
-	{
+	
+	// while(1)
+	// {
 		
-	}
+	// }
 }

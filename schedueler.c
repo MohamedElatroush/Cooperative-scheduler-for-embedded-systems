@@ -28,7 +28,7 @@ void QueTask(void(*task_ptr)(void), int priority)
 	int i,j;
 	for(i=0;i<ReadyQueueSize;i++) // loop over the ready queue
 	{
-		if(priority > Ready_Queue[i].priority) // if the priority of the new Task is greater than the current task
+		if(priority < Ready_Queue[i].priority) // if the priority of the new Task is greater than the current task
 		{
 			break;
 		}
@@ -46,6 +46,7 @@ void QueTask(void(*task_ptr)(void), int priority)
 	ReadyQueueSize++;
 	TaskId++;
 	printf("here\n");
+	
 }
 
 
@@ -70,6 +71,8 @@ void Dispatch(void)
 {
 	//(*Ready_Queue[0].task_ptr);
 	(*Ready_Queue[0].task_ptr)();
+	(*Ready_Queue[1].task_ptr)();
+	(*Ready_Queue[2].task_ptr)();
 
 	ReadyQueueSize--;
 	//
