@@ -35,15 +35,17 @@ void QueTask(void(*task_ptr)(void), int priority)
 	}
 	for(j=ReadyQueueSize;j>i;j--)
 	{
-		Ready_Queue[j] = Ready_Queue[j+1];
+		Ready_Queue[j] = Ready_Queue[j-1];
 	}
 	
 	Ready_Queue[i]=(TASK){.Task_id = TaskId,
 											  .task_ptr = task_ptr,
 												.priority = priority};
+												
+    
 	ReadyQueueSize++;
 	TaskId++;
-	
+	printf("here\n");
 }
 
 
@@ -64,7 +66,11 @@ void init(void)
 	
 }
 
-void Dispatch()
+void Dispatch(void)
 {
+	//(*Ready_Queue[0].task_ptr);
+	(*Ready_Queue[0].task_ptr)();
+
+	ReadyQueueSize--;
 	//
 }
