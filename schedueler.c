@@ -6,32 +6,43 @@
 #define MAX_SIZE (10)
 
 void init(void);
-void enqueue(void(*)(void), int);
-void dequeue(int*);
+void QueTask(void(*)(void), int);
+void Dispatch(void);
 
 typedef struct TASK_ {
-	int Task_id;
-	void(*task_ptr)(void);
-	int priority;
+	int Task_id; //Unique TaskID
+	void(*task_ptr)(void); // pointer to function
+	int priority; // priority of a task
 }TASK;
 
 
-static int ReadyQueueSize = 10;
-static int TaskId = 0;
+static int ReadyQueueSize;
+static int TaskId;
 
 
 static TASK Ready_Queue[MAX_SIZE];
 
 
-void enqueue(void(*task_ptr)(void), int priority)
+void QueTask(void(*task_ptr)(void), int priority)
 {
-	for(int i=0;i<ReadyQueueSize;i++)
+	int i,j;
+	for(i=0;i<ReadyQueueSize;i++) // loop over the ready queue
 	{
-		if(priority < Ready_Queue[i].priority)
+		if(priority > Ready_Queue[i].priority) // if the priority of the new Task is greater than the current task
 		{
 			break;
 		}
 	}
+	for(j=ReadyQueueSize;j>i;j--)
+	{
+		Ready_Queue[j] = Ready_Queue[j+1];
+	}
+	
+	Ready_Queue[i]=(TASK){.Task_id = TaskId,
+											  .task_ptr = task_ptr,
+												.priority = priority};
+	ReadyQueueSize++;
+	TaskId++;
 	
 }
 
@@ -51,4 +62,9 @@ void init(void)
 	
 	//ReRunMe() //0: Task will enqueue itself
 	
+}
+
+void Dispatch()
+{
+	//
 }
