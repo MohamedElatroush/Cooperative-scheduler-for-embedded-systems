@@ -2,6 +2,7 @@
 
 Task A here is the task with the highest priority, and will use ReRunMe with 0 sleeping time. This will lead to the blocking of tasks B and C, since A will always have the priority to execute.
 
+## Tasks Definition:
 <br>
 void TaskA(){<br>
 	//
