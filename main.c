@@ -28,6 +28,7 @@ void SysTick_Handler(void);
 //void EXTI0_IRQHandler(void);
 static void sendUART(uint8_t * data, uint32_t length);
 //static uint8_t receiveUART(void);
+static uint8_t failed[] = "ERROR!! - choose a priority number between 1 and 8\n";
 
 void SysTick_Handler(void)  {
 	timerFlag = 1;
@@ -112,15 +113,12 @@ static void uartInit()
 {	
     // enable GPIOA clock, bit 0 on AHB1ENR
     RCC->AHB1ENR |= (1 << 0);
-
     // set pin modes as alternate mode 7 (pins 2 and 3)
     // USART2 TX and RX pins are PA2 and PA3 respectively
     GPIOA->MODER &= ~(0xFU << 4); // Reset bits 4:5 for PA2 and 6:7 for PA3
     GPIOA->MODER |=  (0xAU << 4); // Set   bits 4:5 for PA2 and 6:7 for PA3 to alternate mode (10)
-
     // set pin modes as high speed
     GPIOA->OSPEEDR |= 0x000000A0; // Set pin 2/3 to high speed mode (0b10)
-
     // choose AF7 for USART2 in Alternate Function registers
     GPIOA->AFR[0] |= (0x7 << 8); // for pin A2
     GPIOA->AFR[0] |= (0x7 << 12); // for pin A3
@@ -145,6 +143,11 @@ static TASK Delay_Queue[MAX_SIZE];
 
 void QueTask(void(*task_ptr)(void), int priority)
 {
+	if(priority < 1 || priority >8)
+	{
+		sendUART((uint8_t*)failed, sizeof(failed));
+		exit(1);
+	}
 	int i,j;
 	for(i=0;i<ReadyQueueSize;i++) // loop over the ready queue
 	{
@@ -171,6 +174,7 @@ void QueTask(void(*task_ptr)(void), int priority)
 
 void QueDelayedTask(void(*task_ptr)(void), int priority, int sleepTime)
 {
+	
 	int i,j;
 	
 	for(i=0;i<DelayQueueSize;i++) // loop over the ready queue
@@ -303,7 +307,7 @@ int main()
 	  /* enable interrupt controller for External interrupt 0 */
 		//NVIC_EnableIRQ(EXTI0_IRQn);
 	
-	QueTask(&TaskA,1);
+	QueTask(&TaskA,11);
 	QueTask(&TaskB,2);
 	QueTask(&TaskC,3);
 	
