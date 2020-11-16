@@ -2,9 +2,9 @@
 
 void TaskA(){
 	//
-	static uint8_t A_msg[] = "Task A\n";
-	sendUART(A_msg, sizeof(A_msg));
-	ReRunMe(&TaskA, 1, 6); 
+	static uint8_t A_msg[] = "Task A\n"; <br>
+	sendUART(A_msg, sizeof(A_msg));<br>
+	ReRunMe(&TaskA, 1, 6); <br>
 }
 <br>
 void TaskB(){
