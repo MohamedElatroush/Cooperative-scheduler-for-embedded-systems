@@ -21,6 +21,6 @@ void TaskC(){<br>
 <br>
 ## Priority 11 to TaskA (Invalid)
 <br>
-QueTask(&TaskA,11);
-QueTask(&TaskB,2);
-QueTask(&TaskC,3);
+QueTask(&TaskA,11);<br>
+QueTask(&TaskB,2);<br>
+QueTask(&TaskC,3);<br>
