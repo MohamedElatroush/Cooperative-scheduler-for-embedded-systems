@@ -26,9 +26,9 @@ void TaskC(){<br>
 	<br>
 }
 
-<br>
+
 ## Inside the main function:
-<br>
+
   QueTask(&TaskA,1);
   <br>
 QueTask(&TaskB,2);
