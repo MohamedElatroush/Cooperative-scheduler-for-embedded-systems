@@ -27,7 +27,7 @@ void TaskC(){<br>
 }
 
 <br>
-In the main function:
+## Inside the main function:
 <br>
   QueTask(&TaskA,1);
   <br>
