@@ -1,7 +1,7 @@
 # Cooperative-scheduler-for-embedded-systems
 
-This project is done for the Embedded Systems Course in the American University in Cairo. 
-Instructor: Dr. Mohamed Shalan
+This project is done for the Embedded Systems Course in the American University in Cairo. <br>
+Instructor: Dr. Mohamed Shalan <br>
 Done By: Mohamed El Atroush (ID: 900152131), Zeyad Zaki (ID: 900160268)
 
 ## The scheduler Logic:
