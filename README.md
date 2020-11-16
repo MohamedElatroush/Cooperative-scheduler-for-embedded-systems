@@ -1,5 +1,9 @@
 # Cooperative-scheduler-for-embedded-systems
 
+This project is done for the Embedded Systems Course in the American University in Cairo. 
+Instructor: Dr. Mohamed Shalan
+Done By: Mohamed El Atroush (ID: 900152131), Zeyad Zaki (ID: 900160268)
+
 ## The scheduler Logic:
 There is a struct named "Task" which contains the task pinter, priority and sleep time. The scheduler has 2 Tasks queues; the ready and the delay. The tasks in the ready queue are sorted based on their priorities, when a dispatch is called, the task in the front of the queue will be popped and executed. The delay queue holds the tasks that still are still sleeping, and sorts them based on their sleeping time. After each clock tick the sleeping time decrements to all tasks in the DelayQueue, once one of these tasks have sleepingTime = 0, it'll be transfered from the delay queue to the ready queue.  
 
