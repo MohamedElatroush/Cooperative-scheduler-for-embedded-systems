@@ -1,6 +1,6 @@
 # Test 2: Scheduling of 3 Tasks
 
-Task A has the highest priority then B then C. A reruns itself giving sleeping time of 6, B reruns itself giving sleeping time of 4 and C reruns itself giving sleeping time of 2. The expected output is the execution of A->B->C then the readyQueue will be empty for 2 ticks then it will start executing C->B->A->C and so on.   
+Task A has the highest priority then B then C. A reruns itself giving sleeping time of 6, B reruns itself giving sleeping time of 4 and C reruns itself giving sleeping time of 2. The expected output is the execution of A->B->C then the readyQueue will be empty for 1 tick then it will start executing C->B->A->C and so on.   
 
 ## Tasks Definition:
 void TaskA(){  <br>
