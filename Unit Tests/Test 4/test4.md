@@ -1,4 +1,4 @@
-# Test 4: Testing with 4 Tasks (A, B, C, D) [Scalability Test]
+# Test 4: Testing with 4 Tasks (A, B, C, D) - Scalability Test
 void TaskA(){
 	//
 	static uint8_t A_msg[] = "Task A\n";
