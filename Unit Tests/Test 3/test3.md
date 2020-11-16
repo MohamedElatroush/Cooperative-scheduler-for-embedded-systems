@@ -1,5 +1,6 @@
 # Attempting to input an invalid priority number
 We're trying here to give TaskA an invalid priority number, to test the program since the schedueler supports 8 priority levels.
+## Tasks
 void TaskA(){
 	//<br>
 	static uint8_t A_msg[] = "Task A\n"; <br>
