@@ -6,19 +6,19 @@ void TaskA(){
 	sendUART(A_msg, sizeof(A_msg));
 	ReRunMe(&TaskA, 1, 6); 
 }
-
+<br>
 void TaskB(){
 	static uint8_t B_msg[] = "Task B\n";
 	sendUART(B_msg, sizeof(B_msg));
 	ReRunMe(&TaskB, 2, 4); 
 }
-
+<br>
 void TaskC(){
 	static uint8_t C_msg[] = "Task C\n";
 	sendUART(C_msg, sizeof(C_msg));
 	ReRunMe(&TaskC, 3, 2); 
 }
-
+<br>
 ## Priority 11 to TaskA (Invalid)
 <br>
 QueTask(&TaskA,11);
