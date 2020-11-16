@@ -26,7 +26,7 @@ The scheduler has 2 queues; the ready and the delay. The tasks in the ready queu
   * If the readyQueue is empty it will do nothing
 
 ## How to use the scheduler:
-* The scheduler only supports tasks that have 0 arguments and returns nothing
+* The scheduler only supports tasks that have 0 arguments and returns nothing. It also suppports priority levels from 1-8.
 * First initialize the scheduler using sched_init in the main
 * After defining the tasks, use the function QueueTask to add all your tasks to the scheduler
 * In the infinite loop in the main make sure to call the dispatch function along with the Decrement_DelayQueue function for the scheduler to work correctly
