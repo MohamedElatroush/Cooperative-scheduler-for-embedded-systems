@@ -1,6 +1,6 @@
 # Test 1: Using ReRunMe(0) 
 
-The expected output is that the task that issued that function will keep running resulting in blocking all other tasks.
+Task A here is the task with the highest priority, and will use ReRunMe with 0 sleeping time. This will lead to the blocking of tasks B and C, since A will always have the priority to execute.
 
 <br>
 void TaskA(){<br>
