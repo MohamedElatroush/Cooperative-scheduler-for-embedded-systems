@@ -39,3 +39,7 @@ There is a struct named "Task" which contains the task pinter, priority and slee
 * The main.c in this repo has all the functions' definitions along with an example of how to create and schedule 3 tasks with different priorities and rerunning times
 * There is also a "Unit Tests" folder containing several different scenarios of the tasks and what is the output of the scheduler
 * For simulation purposes all the tasks print their name to the UART to be displayed on the Renode simulation, however these tasks could be used to do anything else.
+
+## Softwares and Languages Used:
+* This project is developed on Keil uVison IDE, and run on the STM32F4_discovery kit simulated using Renode
+* The language used to develop the scheduler is C
