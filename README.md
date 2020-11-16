@@ -1,8 +1,8 @@
 # Cooperative-scheduler-for-embedded-systems
 
 The scheduler has 3 functions which the user shall use while coding his program:
-sched_init(): 
-Which initializes both queues (delayed and ready)
+*sched_init(): 
+**Which initializes both queues (delayed and ready)
 QueueTask(void(*)(void), int): 
 Takes the pointer to the task and its priority
 This function enqueues the task to the readyQueue and sorts it based on the functions priority; the function with the highest priority (lowest integer value) will be in the front of the queue
