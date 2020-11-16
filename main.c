@@ -8,11 +8,7 @@
 
 
 static int timer_counter = 0;
-//static uint8_t pressedMsg[] = "Button is pressed !!\n";
-//static uint8_t releasedMsg[] = "Button is released !!\n";
-//static char buttonPressed = 1;
 static char timerFlag = 0;
-//static volatile uint8_t stopFlag = 0;
 
 void TaskA(void);
 void TaskB(void);
@@ -24,39 +20,13 @@ void Decrement_DelayedQueue(void);
 void QueDelayedTask(void(*) (void), int, int);
 void Dispatch(void);
 void SysTick_Handler(void);
-//void USART2_IRQHandler(void);
-//void EXTI0_IRQHandler(void);
 static void sendUART(uint8_t * data, uint32_t length);
-//static uint8_t receiveUART(void);
 static uint8_t failed[] = "ERROR!! - choose a priority number between 1 and 8\n";
 
 void SysTick_Handler(void)  {
 	timerFlag = 1;
 }
 
-//void USART2_IRQHandler(void) {
-	/* pause/resume UART messages */
-	//stopFlag = !stopFlag;
-	
-	/* dummy read */
-	//(void)receiveUART();
-//}
-
-//void EXTI0_IRQHandler(void) {
-		/* Clear interrupt request */
-//		EXTI->PR |= 0x01;
-		/* send msg indicating button state */
-//		if(buttonPressed)
-//		{
-//				sendUART(pressedMsg, sizeof(pressedMsg));
-//				buttonPressed = 0;
-//		}
-//		else
-//		{
-//				sendUART(releasedMsg, sizeof(releasedMsg));
-//				buttonPressed = 1;
-//		}
-//}
 
 static void sendUART(uint8_t * data, uint32_t length)
 {
@@ -72,13 +42,6 @@ static void sendUART(uint8_t * data, uint32_t length)
       }
 }
 
-//static uint8_t receiveUART()
-//{
-	  // extract data
-//	  uint8_t data = USART2->DR & 0xFF;
-	
-//	  return data;
-//}
 
 static void uartInit()
 {
@@ -108,22 +71,6 @@ static void uartInit()
     USART2->CR1 |= (1 << 13);
 }
 
-/*
-//static void gpioInit()
-{	
-    // enable GPIOA clock, bit 0 on AHB1ENR
-    RCC->AHB1ENR |= (1 << 0);
-    // set pin modes as alternate mode 7 (pins 2 and 3)
-    // USART2 TX and RX pins are PA2 and PA3 respectively
-    GPIOA->MODER &= ~(0xFU << 4); // Reset bits 4:5 for PA2 and 6:7 for PA3
-    GPIOA->MODER |=  (0xAU << 4); // Set   bits 4:5 for PA2 and 6:7 for PA3 to alternate mode (10)
-    // set pin modes as high speed
-    GPIOA->OSPEEDR |= 0x000000A0; // Set pin 2/3 to high speed mode (0b10)
-    // choose AF7 for USART2 in Alternate Function registers
-    GPIOA->AFR[0] |= (0x7 << 8); // for pin A2
-    GPIOA->AFR[0] |= (0x7 << 12); // for pin A3
-}
-*/
 
 typedef struct TASK_ {
 	int Task_id; //Unique TaskID
@@ -161,10 +108,10 @@ void QueTask(void(*task_ptr)(void), int priority)
 		Ready_Queue[j] = Ready_Queue[j-1];
 	}
 	
-	Ready_Queue[i]=(TASK){.Task_id = TaskId,
-											  .task_ptr = task_ptr,
-												.priority = priority,
-												.sleep_time = 0};
+	Ready_Queue[i]=(TASK){	.Task_id = TaskId,
+				.task_ptr = task_ptr,
+				.priority = priority,
+				.sleep_time = 0};
 												
     
 	ReadyQueueSize++;
@@ -189,10 +136,10 @@ void QueDelayedTask(void(*task_ptr)(void), int priority, int sleepTime)
 		Delay_Queue[j] = Delay_Queue[j-1];
 	}
 	
-	Delay_Queue[i]=(TASK){.Task_id = TaskId,
-											  .task_ptr = task_ptr,
-												.priority = priority,
-												.sleep_time = sleepTime};
+	Delay_Queue[i]=(TASK){	.Task_id = TaskId,
+			  	.task_ptr = task_ptr,
+				.priority = priority,
+				.sleep_time = sleepTime};
 												
 	DelayQueueSize++;
 }
@@ -285,27 +232,15 @@ void TaskC(){
 
 int main()
 {
-		sched_init();
+	sched_init();
 	
 	/* startup code initialization */
 	  SystemInit();
 	  SystemCoreClockUpdate();
-	  /* intialize UART */
-	 // gpioInit();
-		/* intialize UART */
+	/* intialize UART */
 	  uartInit();
-	  /* enable SysTick timer to interrupt system every second */
+	/* enable SysTick timer to interrupt system every 100ms */
 	  SysTick_Config(SystemCoreClock/10);
-	
-	  /* enable interrupt controller for USART2 external interrupt */
-		//NVIC_EnableIRQ(USART2_IRQn);
-		/* Unmask External interrupt 0 */
-		//EXTI->IMR |= 0x0001;
-	  /* Enable rising and falling edge triggering for External interrupt 0 */
-		//EXTI->RTSR |= 0x0001;
-		//EXTI->FTSR |= 0x0001;
-	  /* enable interrupt controller for External interrupt 0 */
-		//NVIC_EnableIRQ(EXTI0_IRQn);
 	
 	QueTask(&TaskA,11);
 	QueTask(&TaskB,2);
@@ -315,13 +250,13 @@ int main()
 	 {
 		 if(timerFlag)
 				{
-						char temp[20] = {0};
-						sprintf(temp, "Time %d: ", timer_counter);
-						sendUART((uint8_t*)temp, sizeof(temp));
-					  Dispatch();
-						Decrement_DelayedQueue();
-						timer_counter++;
-						timerFlag = 0;
+					char temp[20] = {0};
+					sprintf(temp, "Time %d: ", timer_counter);
+					sendUART((uint8_t*)temp, sizeof(temp));
+					Dispatch();
+					Decrement_DelayedQueue();
+					timer_counter++;
+					timerFlag = 0;
 				}
 		 
 	 }
