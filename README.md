@@ -1,17 +1,18 @@
 # Cooperative-scheduler-for-embedded-systems
 
 ## The scheduler Logic:
-The scheduler has 2 queues; the ready and the delay. The tasks in the ready queue are sorted based on their priorities, when a dispatch is called, the task in the front of the queue will be popped and executed. The delay queue holds the tasks that still are still sleeping, and sorts them based on their sleeping time. After each clock tick the sleeping time decrements to all tasks in the DelayQueue, once one of these tasks have sleepingTime = 0, it'll be transfered from the delay queue to the ready queue.  
+There is a struct named "Task" which contains the task pinter, priority and sleep time. The scheduler has 2 Tasks queues; the ready and the delay. The tasks in the ready queue are sorted based on their priorities, when a dispatch is called, the task in the front of the queue will be popped and executed. The delay queue holds the tasks that still are still sleeping, and sorts them based on their sleeping time. After each clock tick the sleeping time decrements to all tasks in the DelayQueue, once one of these tasks have sleepingTime = 0, it'll be transfered from the delay queue to the ready queue.  
 
 ## The scheduler functions:
 * **sched_init():** 
   * Which initializes both queues (delayed and ready)
 * **QueueTask(void(*)(void), int):** 
   * Takes the pointer to the task and its priority
-  * This function enqueues the task to the readyQueue and sorts it based on the functions priority; the function with the highest priority (lowest integer value) will be in the front of the queue
+  * Checks first that the priority level is valid from 1-7 else it will exit and print an error
+  * If the priority level is valid, it enqueues the task to the readyQueue and sorts it based on the task priority; the task with the highest priority (lowest integer value) will be in the front of the queue
 * **QueDelayedTask(void(*) (void), int, int):**
   * Takes the pointer to the task, its priority and the sleep time
-  * This function enqueues the task to the delayQueue and sorts the queue based on the sleep time, the function with the least sleep time remaining will be in the front of the queue.   
+  * This function enqueues the task to the delayQueue and sorts the queue based on the sleep time, the task with the least sleep time remaining will be in the front of the queue.   
 * **ReRunMe(void(*)(void), int, int):** 
   * Takes the pointer to the task, its priority and the sleep time
   * If the sleep time is zero, it adds the task to the ready queue automatically using the QueueTask function.
