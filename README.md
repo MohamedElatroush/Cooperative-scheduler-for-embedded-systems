@@ -1,6 +1,9 @@
 # Cooperative-scheduler-for-embedded-systems
 
-The scheduler has 3 functions which the user shall use while coding his program:
+## The scheduler Logic:
+The scheduler has 2 queues; the ready and the delay. The tasks in the ready queue are sorted based on their priorities, when a dispatch is called, the task in the front of the queue will be popped and executed. The delay queue holds the tasks that still are still sleeping, and sorts them based on their sleeping time. After each clock tick the sleeping time decrements to all tasks in the DelayQueue, once one of these tasks have sleepingTime = 0, it'll be transfered from the delay queue to the ready queue.  
+
+## The scheduler functions:
 * **sched_init():** 
   * Which initializes both queues (delayed and ready)
 * **QueueTask(void(*)(void), int):** 
@@ -14,5 +17,20 @@ The scheduler has 3 functions which the user shall use while coding his program:
   * If the sleep time is zero, it adds the task to the ready queue automatically using the QueueTask function.
   * If the sleep time is greater than zero, it will add the task to the delayed queue using the QueDelayedTask function
 * **Decrement_DelayedQueue():** 
+  * This function is called after each clock tick in the infinite loop in the main
+  * Is responsible for decrementing the sleepTime of all the tasks in the DelayQueue
+  * Checks if the sleepTime of a task reaches 0, it'll remove this task from the DelayQueue and enqueues it to the ReadyQueue
+* **Dispatch():**
+  * It is called in the infinite loop in the main
+  * This function pops the front task in the ReadyQueue and executes it
+  * If the readyQueue is empty it will do nothing
 
-
+## How to use the scheduler:
+* The scheduler only supports tasks that have 0 arguments and returns nothing
+* First initialize the scheduler using sched_init in the main
+* After defining the tasks, use the function QueueTask to add all your tasks to the scheduler
+* In the infinite loop in the main make sure to call the dispatch function along with the Decrement_DelayQueue function for the scheduler to work correctly
+* If you wish for a certain task to be rerun after it finishes executing make sure to call the ReRunMe function in your task definition
+* The main.c in this repo has all the functions' definitions along with an example of how to create and schedule 3 tasks with different priorities and rerunning times
+* There is also a "Unit Tests" folder containing several different scenarios of the tasks and what is the output of the scheduler
+* For simulation purposes all the tasks print their name to the UART to be displayed on the Renode simulation, however these tasks could be used to do anything else.
