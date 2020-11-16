@@ -4,7 +4,7 @@ Task A here is the task with the highest priority, and will use ReRunMe with 0 s
 
 ## Tasks Definition:
 void TaskA(){<br>
-	//
+	
 	static uint8_t A_msg[] = "Task A\n"; <br>
 	sendUART(A_msg, sizeof(A_msg));<br>
 	ReRunMe(&TaskA, 1, 0);  //Setting TaskA to ReRunMe(0)<br>
